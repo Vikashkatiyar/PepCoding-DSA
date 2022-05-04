@@ -117,6 +117,26 @@ public class Main {
       
     
   }
+  
+  
+  //WITH THE HELP OF JOR(^) SYMBOL
+  
+//   public static void printSingleChildNodes(Node node){
+//     if(node==null){
+//          return;
+//     }
+
+//     if((node.left==null)^(node.right==null)){
+//       if(node.left==null){
+//            System.out.println(node.right.data);
+//       }
+//       else{
+//         System.out.println(node.left.data);
+//       }
+//     }
+//     printSingleChildNodes(node.left);
+//     printSingleChildNodes(node.right);
+  }
 
   public static void main(String[] args) throws Exception {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
