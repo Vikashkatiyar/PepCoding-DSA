@@ -1,76 +1,77 @@
 // This problem is nothing but Tribonacci Series on leet code
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
+public class Main {
 
-
-class Main {
     public static void main(String[] args) throws Exception {
-        Scanner scn = new Scanner(System.in);
-        int n = scn.nextInt();
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        // int ans=countPathsRecursion(n);
+        // System.out.println(ans);
 
-        System.out.println(csRec(0, n));
+        // int []dp=new int[n+1];
+        // Arrays.fill(dp,-1);
+        // int ans=countPathsMemo(n,dp);
+        // System.out.println(ans);
 
-        int[] dp = new int[n + 1];
-        Arrays.fill(dp, -1);
-        System.out.println(csMem(0, n, dp));
 
-        System.out.println(csTab(n));
+        System.out.println(countPathsTab(n));
+
     }
-
-    // O(3^N) Time, O(N) Space
-    public static int csRec(int src, int dest) {
-        if (src > dest)
-            return 0;
-        // -ve base case
-
-        if (src == dest)
+    public static int countPathsRecursion(int n){
+        if(n==0){
             return 1;
-        // +ve base case
-
-        int x = csRec(src + 1, dest);
-        int y = csRec(src + 2, dest);
-        int z = csRec(src + 3, dest);
-
-        int totalPaths = x + y + z;
-        return totalPaths;
-    }
-
-    // O(N) Time, O(N) Space
-    public static int csMem(int src, int dest, int[] dp) {
-        if (src > dest)
+        }
+        else if(n<0){
             return 0;
-        if (src == dest)
-            return 1;
-
-        if (dp[src] != -1) {
-            return dp[src];
         }
 
-        int x = csMem(src + 1, dest, dp);
-        int y = csMem(src + 2, dest, dp);
-        int z = csMem(src + 3, dest, dp);
+        int nm1=countPathsRecursion(n-1);
+        int nm2=countPathsRecursion(n-2);
+        int nm3=countPathsRecursion(n-3);
 
-        dp[src] = x + y + z;
-        return dp[src];
+        int nm=nm1+nm2+nm3;
+        return nm;
     }
 
-    // O(N) Time, O(N) Space
-    public static int csTab(int dest) {
-        int[] dp = new int[dest + 1];
-        dp[dest] = 1;
-        for (int i = dest - 1; i >= 0; i--) {
-
-            dp[i] = dp[i + 1];
-            if (i + 2 < dp.length) {
-                dp[i] += dp[i + 2];
-            }
-
-            if (i + 3 < dp.length) {
-                dp[i] += dp[i + 3];
-            }
+    public static int countPathsMemo(int n,int []dp){
+        if(n==0){
+            return 1;
+        }
+        else if(n<0){
+            return 0;
         }
 
-        return dp[0];
+        if(dp[n]!=-1){
+            return dp[n];
+        }
+
+        int nm1=countPathsMemo(n-1,dp);
+        int nm2=countPathsMemo(n-2,dp);
+        int nm3=countPathsMemo(n-3,dp);
+
+        int nm=nm1+nm2+nm3;
+        dp[n]=nm;
+        return nm;
+    }
+
+
+    public static int countPathsTab(int n){
+        int []dp=new int[n+1];
+        dp[0]=1;
+
+        for(int i=1;i<=n;i++){
+            if(i==1){
+                dp[i]=dp[i-1];
+            }
+            else if(i==2){
+                dp[i]=dp[i-1]+dp[i-2];
+            }
+            else{
+                dp[i]=dp[i-1]+dp[i-2]+dp[i-3];
+            }
+        }
+        return dp[n];
     }
 }
